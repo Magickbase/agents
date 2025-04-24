@@ -36,7 +36,7 @@ jobs:
           image: ckb-explorer-api
           registry: ghcr.io
           githubOrg: magickbase # optional
-          dockerfile: ../../docker/Dockerfile
+          dockerfile: ./docker/Dockerfile
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
       - name: DeleteUselessImages
