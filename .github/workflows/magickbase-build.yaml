@@ -33,7 +33,7 @@ jobs:
         id: docker_build
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: ckb-explorer-api
+          image: agents
           registry: ghcr.io
           githubOrg: magickbase # optional
           dockerfile: ./docker/Dockerfile
