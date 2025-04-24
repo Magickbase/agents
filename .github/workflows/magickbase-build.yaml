@@ -27,6 +27,8 @@ jobs:
           fetch-depth: 0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.0.0
+      - name: check
+        run: ls -l
       - name: Build and push
         id: docker_build
         uses: mr-smithers-excellent/docker-build-push@v5
