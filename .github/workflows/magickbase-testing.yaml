@@ -1,0 +1,22 @@
+name: Deploy to testnet
+
+on:
+  push:
+    branches:
+      - 'cicd-test'
+jobs:
+  build:
+    uses: ./.github/workflows/magickbase-build.yml
+    secrets: inherit
+  deploy-update:
+    needs: build
+    strategy:
+      matrix:
+        workload: [agents]
+    uses: ./.github/workflows/magickbase-deploy.yml
+    with:
+      k8s-namespace: testnet
+      k8s-workload: ${{ matrix.workload }}
+      image-name: ${{ needs.build.outputs.image-name }}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+    secrets: inherit
