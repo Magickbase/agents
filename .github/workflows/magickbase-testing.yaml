@@ -3,7 +3,7 @@ name: Deploy to testnet
 on:
   push:
     branches:
-      - 'cicd-test'
+      - 'develop'
 jobs:
   build:
     uses: ./.github/workflows/magickbase-build.yaml
