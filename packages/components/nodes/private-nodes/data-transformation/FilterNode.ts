@@ -98,8 +98,7 @@ class FilterNode extends PrivateNodeBase {
         ]
     }
 
-    private getNestedValue = (obj: any, path: string): any =>
-        path.split('.').reduce((current, key) => current?.[key] ?? null, obj)
+    private getNestedValue = (obj: any, path: string): any => path.split('.').reduce((current, key) => current?.[key] ?? null, obj)
 
     private evaluateCondition = (item: any, condition: FilterCondition): boolean => {
         const fieldValue = this.getNestedValue(item, condition.field)
