@@ -5,7 +5,7 @@ import { INode, INodeParams } from '../../src/Interface'
  * by automatically prefixing node labels with 'private_' when necessary.
  */
 export abstract class PrivateNodeBase implements INode {
-    private _label: string = ''
+    label: string = ''
 
     /** The display name of the node */
     name: string = ''
@@ -29,24 +29,8 @@ export abstract class PrivateNodeBase implements INode {
     baseClasses: string[] = []
 
     /** Optional credential configuration for authenticated operations */
-    credential?: Record<string, any>
+    credential?: INodeParams
 
     /** Configuration inputs that this node accepts */
     inputs: INodeParams[] = []
-
-    /**
-     * Gets the node's label with proper private prefix
-     * @returns The prefixed label string
-     */
-    get label(): string {
-        return this._label
-    }
-
-    /**
-     * Sets the node's label, ensuring it has the required 'private_' prefix
-     * @param value - The label to set
-     */
-    set label(value: string) {
-        this._label = value.startsWith('private_') ? value : `private_${value}`
-    }
 }
