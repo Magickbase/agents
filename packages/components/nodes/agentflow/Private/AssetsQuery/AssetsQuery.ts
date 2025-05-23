@@ -48,7 +48,6 @@ class AssetsQuery_Agentflow implements INode {
                     trpcClient.address.getAddressAssets.query(item.address).then((res) => ({ address: item.address, assets: res }))
                 )
             )
-            console.log('res: ', res)
             const returnOutput = {
                 id: nodeData.id,
                 name: this.name,

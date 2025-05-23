@@ -54,7 +54,6 @@ class TxQuery_Agentflow implements INode {
                     return [item.address, txs.data]
                 })
             )
-            console.log('res: ', res)
             const returnOutput = {
                 id: nodeData.id,
                 name: this.name,
