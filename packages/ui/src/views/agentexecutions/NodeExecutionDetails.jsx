@@ -35,6 +35,8 @@ import ReactJson from 'flowise-react-json-view'
 import { CodeEditor } from '@/ui-component/editor/CodeEditor'
 
 import predictionApi from '@/api/prediction'
+import AssetsDetail from './AssetsDetail'
+import TxDetail from './TxDetail'
 
 export const NodeExecutionDetails = ({ data, label, status, metadata, isPublic, onProceedSuccess }) => {
     const [dataView, setDataView] = useState('rendered')
@@ -848,6 +850,10 @@ export const NodeExecutionDetails = ({ data, label, status, metadata, isPublic, 
                         <JSONViewer data={data.output.form || data.output.http} />
                     ) : data?.output?.conditions ? (
                         renderFullfilledConditions(data.output.conditions)
+                    ) : data?.output?.assetsQuery ? (
+                        <AssetsDetail assetsQuery={data.output.assetsQuery} />
+                    ) : data?.output?.txQuery ? (
+                        <TxDetail txQuery={data.output.txQuery} />
                     ) : (
                         <Box
                             sx={{

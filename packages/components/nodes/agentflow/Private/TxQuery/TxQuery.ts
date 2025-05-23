@@ -1,7 +1,7 @@
 import { ICommonObject, INode, INodeData, INodeParams } from '../../../../src/Interface'
 import { getTrpcClient } from '../../../../trpc/client'
 
-class AssetsQuery_Agentflow implements INode {
+class TxQuery_Agentflow implements INode {
     label: string
     name: string
     version: number
@@ -16,12 +16,12 @@ class AssetsQuery_Agentflow implements INode {
     inputs: INodeParams[]
 
     constructor() {
-        this.label = 'AssetsQuery'
-        this.name = 'assetsQueryFlow'
+        this.label = 'TxQuery'
+        this.name = 'txQueryFlow'
         this.version = 1.0
-        this.type = 'AssetsQuery'
+        this.type = 'TxQuery'
         this.category = 'Agent Flows'
-        this.description = 'Query assets from the blockchain'
+        this.description = 'Query transactions from the blockchain'
         this.baseClasses = [this.type]
         this.color = '#FF7F7F'
         this.inputs = [
@@ -38,15 +38,21 @@ class AssetsQuery_Agentflow implements INode {
     async run(nodeData: INodeData, _: string, options: ICommonObject): Promise<any> {
         try {
             const trpcClient = await getTrpcClient()
-            const addressList = nodeData.inputs?.address
+            const addressList = nodeData.inputs?.addressList
             const finalAddressList = addressList
                 .split(',')
                 ?.filter((item: any) => !!item)
                 .map((item: any) => ({ address: item.trim() }))
+
             const res = await Promise.all(
-                finalAddressList.map((item: any) =>
-                    trpcClient.address.getAddressAssets.query(item.address).then((res) => ({ address: item.address, assets: res }))
-                )
+                finalAddressList.map(async (item: any) => {
+                    const txs = await trpcClient.address.transactions.query({
+                        address: item.address,
+                        orderBy: ['time'],
+                        pageSize: 10
+                    })
+                    return [item.address, txs.data]
+                })
             )
             console.log('res: ', res)
             const returnOutput = {
@@ -56,7 +62,7 @@ class AssetsQuery_Agentflow implements INode {
                     addressList: finalAddressList
                 },
                 output: {
-                    assetsQuery: res
+                    txQuery: res
                 },
                 state: options.agentflowRuntime?.state
             }
@@ -69,4 +75,4 @@ class AssetsQuery_Agentflow implements INode {
     }
 }
 
-module.exports = { nodeClass: AssetsQuery_Agentflow }
+module.exports = { nodeClass: TxQuery_Agentflow }

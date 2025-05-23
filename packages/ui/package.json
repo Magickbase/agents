@@ -34,6 +34,7 @@
         "@uiw/react-codemirror": "^4.21.21",
         "axios": "1.8.2",
         "clsx": "^1.1.1",
+        "csv": "^6.3.11",
         "dotenv": "^16.0.0",
         "flowise-embed": "latest",
         "flowise-embed-react": "latest",

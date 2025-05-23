@@ -172,7 +172,7 @@ export const ArrayRenderer = ({ inputParam, data, disabled }) => {
     return (
         <>
             {/* Render each array item */}
-            {arrayItems.map((itemValues, index) => {
+            {(arrayItems ?? []).map((itemValues, index) => {
                 // Create item data directly from parent data
                 const itemData = {
                     ...data,
